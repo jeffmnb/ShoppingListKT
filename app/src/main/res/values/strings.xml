@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">shoppingListApp</string>
+    <string name="title_activity_shopping_list">ShoppingList</string>
+    <string name="title_activity_input_section">InputSection</string>
+    <string name="title_activity_shopping_list_input">ShoppingListInput</string>
+    <string name="title_activity_card_list_section">CardListSection</string>
+    <string name="title_activity_card_item">CardItem</string>
+</resources>
