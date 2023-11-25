@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -19,15 +20,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.shoppinglistapp.ItemData
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardItem(
     item: ItemData, onItemChecked: (ItemData) -> Unit, onRemoveItem: (ItemData) -> Unit
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .graphicsLayer(shape = MaterialTheme.shapes.medium, shadowElevation = 8F)
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 8.dp)
+        .graphicsLayer(shape = MaterialTheme.shapes.medium, shadowElevation = 8f),
+        onClick = { onItemChecked(item) }
     ) {
         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Checkbox(

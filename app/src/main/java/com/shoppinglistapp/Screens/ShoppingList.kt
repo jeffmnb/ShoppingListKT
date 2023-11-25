@@ -1,6 +1,8 @@
 package com.shoppinglistapp.Screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,37 +17,41 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.shoppinglistapp.Components.CardListSection
 import com.shoppinglistapp.Components.InputSection
 import com.shoppinglistapp.ItemData
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ShoppingList() {
 
     var shoppingList = remember {
-        mutableStateListOf(
-            ItemData(id = 0, title = "Banana", checked = false),
-            ItemData(id = 1, title = "Maça", checked = false),
-            ItemData(id = 2, title = "Leite", checked = false),
-            ItemData(id = 3, title = "Feijão", checked = false),
-            ItemData(id = 4, title = "Arroz", checked = false)
-        )
+        mutableStateListOf<ItemData>()
     }
 
-
-    var newItems by remember {
+    var inputValue by remember {
         mutableStateOf("")
     }
 
+    val focusInput = LocalFocusManager.current
+
+    val keyboardManager = LocalSoftwareKeyboardController.current
+
     fun handleAddNewItem() {
-        if (newItems.isNotBlank()) {
-            shoppingList.add(ItemData(newItems, false, shoppingList.size))
-            newItems = ""
-        }
+        if (inputValue.isBlank()) return
+        shoppingList.add(ItemData(inputValue, false, shoppingList.size))
+        shoppingList.reverse()
+        inputValue = ""
+
+        if (keyboardManager !== null) keyboardManager.hide()
     }
 
 
@@ -66,18 +72,32 @@ fun ShoppingList() {
         Modifier
             .fillMaxSize()
             .padding(16.dp)
-    ) {
+            .pointerInput(Unit) {
+                detectTapGestures { offset ->
+                    focusInput.clearFocus()
+                }
+            }) {
         TopAppBar(modifier = Modifier.background(Color.White), title = {
             Text(text = "Lista de Compras")
         })
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        InputSection(newValue = newItems,
+        InputSection(newValue = inputValue,
             onAddItemClick = { handleAddNewItem() },
-            onNewItemChange = { newItems = it })
+            onNewItemChange = { inputValue = it })
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        if (shoppingList.isEmpty()) {
+            Column(
+                Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Todas as tarefas foram feitas : )")
+            }
+        }
 
         CardListSection(list = shoppingList,
             onItemChecked = { handleCheckItem(it) },
