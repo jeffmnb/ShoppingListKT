@@ -1,4 +1,4 @@
-package com.shoppinglistapp.Screens.ui.theme
+package com.shoppinglistapp.ui.Screens.ui.theme
 
 import android.app.Activity
 import android.os.Build

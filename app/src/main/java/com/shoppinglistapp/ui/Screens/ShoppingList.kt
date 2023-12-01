@@ -1,4 +1,4 @@
-package com.shoppinglistapp.Screens
+package com.shoppinglistapp.ui.Screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -25,9 +25,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import com.shoppinglistapp.Components.CardListSection
-import com.shoppinglistapp.Components.InputSection
-import com.shoppinglistapp.ItemData
+import com.shoppinglistapp.ui.Components.CardListSection
+import com.shoppinglistapp.ui.Components.InputSection
+import com.shoppinglistapp.model.ItemData
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -66,17 +66,11 @@ fun ShoppingList() {
         }
     }
 
-
-
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .pointerInput(Unit) {
-                detectTapGestures { offset ->
-                    focusInput.clearFocus()
-                }
-            }) {
+    Column(Modifier.fillMaxSize().padding(16.dp).pointerInput(Unit) {
+        detectTapGestures { offset ->
+            focusInput.clearFocus()
+        }
+    }) {
         TopAppBar(modifier = Modifier.background(Color.White), title = {
             Text(text = "Lista de Compras")
         })

@@ -1,4 +1,4 @@
-package com.shoppinglistapp.Components
+package com.shoppinglistapp.ui.Components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

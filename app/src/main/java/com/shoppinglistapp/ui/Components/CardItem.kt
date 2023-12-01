@@ -1,4 +1,4 @@
-package com.shoppinglistapp.Components
+package com.shoppinglistapp.ui.Components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.shoppinglistapp.ItemData
+import com.shoppinglistapp.model.ItemData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
